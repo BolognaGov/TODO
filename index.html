@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <div id="disable-layer"></div>
+        <div id="edit-popup">
+            <h2>Edit Task Description</h2>
+            <input id="new-desc" type="text" placeholder="New Task Description">
+            <div id="edit-popup-btns">
+                <button type="button" id="edit-ok">OK</button>
+                <button type="button" id="edit-cancel">Cancel</button>
+            </div>
+        </div>
+        <h1 style="padding: 10px; margin: 10px; text-align: center;">Cool To Do List Maker</h1>
+        <div id="task-entries">
+            <input type="text" name="task" id="task-input" placeholder="Add a Task">
+            <button type="button" id="add-task-btn">Add Task</button>
+        </div>
+        <div id="tasks">
+        </div>
+    </main>
+    <script>
+        let tasksInput = document.getElementById("task-input");
+        let tasks = document.getElementById("tasks");
+
+        let allTasks = [];
+        let allDivs = [];
+        let taskIndex = "";
+        let tasksDone = [];
+        
+        document.getElementById("add-task-btn").addEventListener("click", () => {
+            let div = document.createElement("div");
+            let p = document.createElement("p");
+            p.style.display = "inline";
+            p.className = "task-text";
+            p.append(document.createTextNode(`${tasksInput.value.trim()}`));
+            div.append(p);
+            
+            allTasks.push(`${allTasks.length}.${tasksInput.value.trim()}`);
+            allDivs.push(div);
+            
+            let delBtn = document.createElement("button");
+            delBtn.type = "button";
+            delBtn.innerText = "×";
+            delBtn.className = "del-btn";
+            delBtn.addEventListener("click", () => {
+                // remove task from task array
+                taskIndex = Number(div.innerText[0]);
+                allTasks.splice(taskIndex, 1);
+                
+                // remove div from div array
+                div.remove();
+            });
+            div.appendChild(delBtn);
+
+            let editBtn = document.createElement("button");
+            editBtn.type = "button";
+            editBtn.innerText = "✎";
+            editBtn.addEventListener("click", () => {
+                let editPopup = document.getElementById("edit-popup");
+                let disableLayer = document.getElementById("disable-layer");
+
+                disableLayer.style.display = "block";
+                editPopup.style.display = "block";
+
+                let newDescription = document.getElementById("new-desc");
+                let newDescriptionOK = document.getElementById("edit-ok");
+                let newDescriptionCancel = document.getElementById("edit-cancel");
+                
+                newDescriptionOK.addEventListener("click", () => {
+                    if (newDescription.value.trim() !== "") {
+                        let p = editBtn.parentElement.childNodes[0];
+                        p.innerText = newDescription.value.trim();
+                        disableLayer.style.display = "none";
+                        editPopup.style.display = "none";
+                    }
+                });
+
+                newDescriptionCancel.addEventListener("click", () => {
+                    disableLayer.style.display = "none";
+                    editPopup.style.display = "none";
+                });
+            });
+            div.appendChild(editBtn);
+            
+            tasks.appendChild(div);
+        });
+    </script>
+</body>
+</html>
