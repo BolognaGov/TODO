@@ -28,11 +28,6 @@
     <script>
         let tasksInput = document.getElementById("task-input");
         let tasks = document.getElementById("tasks");
-
-        let allTasks = [];
-        let allDivs = [];
-        let taskIndex = "";
-        let tasksDone = [];
         
         document.getElementById("add-task-btn").addEventListener("click", () => {
             let div = document.createElement("div");
@@ -42,19 +37,11 @@
             p.append(document.createTextNode(`${tasksInput.value.trim()}`));
             div.append(p);
             
-            allTasks.push(`${allTasks.length}.${tasksInput.value.trim()}`);
-            allDivs.push(div);
-            
             let delBtn = document.createElement("button");
             delBtn.type = "button";
             delBtn.innerText = "×";
             delBtn.className = "del-btn";
             delBtn.addEventListener("click", () => {
-                // remove task from task array
-                taskIndex = Number(div.innerText[0]);
-                allTasks.splice(taskIndex, 1);
-                
-                // remove div from div array
                 div.remove();
             });
             div.appendChild(delBtn);
