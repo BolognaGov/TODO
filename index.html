@@ -31,7 +31,7 @@
         
         document.getElementById("add-task-btn").addEventListener("click", () => {
             let text = tasksInput.value.trim();
-            if (text === "") return
+            if (text === "") return;
             let div = document.createElement("div");
             let p = document.createElement("p");
             p.style.display = "inline";
@@ -62,22 +62,22 @@
                 let newDescription = document.getElementById("new-desc");
                 let newDescriptionOK = document.getElementById("edit-ok");
                 let newDescriptionCancel = document.getElementById("edit-cancel");
-                
-                newDescriptionOK.addEventListener("click", () => {
+
+                newDescription.value = p.innerText;
+
+                newDescriptionOK.onclick = function () {
                     let newText = newDescription.value.trim();
                     if (newText !== "") {
-                        let p = editBtn.parentElement.childNodes[0];
                         p.innerText = newText;
                         disableLayer.style.display = "none";
                         editPopup.style.display = "none";
-                        newDescription.value = "";
                     }
-                });
+                };
 
-                newDescriptionCancel.addEventListener("click", () => {
+                newDescriptionCancel.onclick = function () {
                     disableLayer.style.display = "none";
                     editPopup.style.display = "none";
-                });
+                };
             });
             div.appendChild(editBtn);
             
