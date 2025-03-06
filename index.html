@@ -19,7 +19,7 @@
         </div>
         <h1 style="padding: 10px; margin: 10px; text-align: center;">Cool To Do List Maker</h1>
         <div id="task-entries">
-            <input type="text" name="task" id="task-input" placeholder="Add a Task">
+            <input type="text" name="task" id="task-input" placeholder="Add a Task" value="">
             <button type="button" id="add-task-btn">Add Task</button>
         </div>
         <div id="tasks">
@@ -30,12 +30,15 @@
         let tasks = document.getElementById("tasks");
         
         document.getElementById("add-task-btn").addEventListener("click", () => {
+            let text = tasksInput.value.trim();
+            if (text === "") return
             let div = document.createElement("div");
             let p = document.createElement("p");
             p.style.display = "inline";
             p.className = "task-text";
-            p.append(document.createTextNode(`${tasksInput.value.trim()}`));
+            p.append(document.createTextNode(text));
             div.append(p);
+            tasksInput.value = "";
             
             let delBtn = document.createElement("button");
             delBtn.type = "button";
@@ -61,11 +64,13 @@
                 let newDescriptionCancel = document.getElementById("edit-cancel");
                 
                 newDescriptionOK.addEventListener("click", () => {
-                    if (newDescription.value.trim() !== "") {
+                    let newText = newDescription.value.trim();
+                    if (newText !== "") {
                         let p = editBtn.parentElement.childNodes[0];
-                        p.innerText = newDescription.value.trim();
+                        p.innerText = newText;
                         disableLayer.style.display = "none";
                         editPopup.style.display = "none";
+                        newDescription.value = "";
                     }
                 });
 
